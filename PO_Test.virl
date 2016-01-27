@@ -3,7 +3,7 @@
     <node name="iosvl2-1" type="SIMPLE" subtype="IOSvL2" location="190,175">
         <extensions>
             <entry key="config" type="String">!
-! Last configuration change at 23:19:37 UTC Tue Jan 26 2016
+! Last configuration change at 00:48:48 UTC Wed Jan 27 2016
 !
 version 15.2
 service timestamps debug datetime msec
@@ -11,7 +11,7 @@ service timestamps log datetime msec
 no service password-encryption
 service compress-config
 !
-hostname SW1
+hostname sw1
 !
 boot-start-marker
 boot-end-marker
@@ -55,8 +55,16 @@ interface GigabitEthernet0/0
  negotiation auto
 !
 interface GigabitEthernet0/1
- media-type rj45
+ no switchport
+ ip address 10.0.0.1 255.255.255.0
  negotiation auto
+!
+interface Vlan1
+ ip address 10.0.0.1 255.255.255.0
+ shutdown
+!
+interface Vlan2
+ ip address 10.0.2.1 255.255.255.0
 !
 ip forward-protocol nd
 !
@@ -110,7 +118,7 @@ end</entry>
     <node name="iosvl2-2" type="SIMPLE" subtype="IOSvL2" location="596,175">
         <extensions>
             <entry key="config" type="String">!
-! Last configuration change at 23:19:36 UTC Tue Jan 26 2016
+! Last configuration change at 00:48:46 UTC Wed Jan 27 2016
 !
 version 15.2
 service timestamps debug datetime msec
@@ -159,7 +167,9 @@ vlan internal allocation policy ascending
 !
 interface Port-channel1
  switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
  switchport mode trunk
+ switchport nonegotiate
 !
 interface GigabitEthernet0/0
  shutdown
@@ -168,24 +178,36 @@ interface GigabitEthernet0/0
 !
 interface GigabitEthernet0/1
  description SW1
+ switchport trunk encapsulation dot1q
+ switchport mode access
  media-type rj45
  negotiation auto
 !
 interface GigabitEthernet0/2
  description SW3
  switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
  switchport mode trunk
+ switchport nonegotiate
  media-type rj45
  negotiation auto
- channel-group 1 mode auto
+ channel-group 1 mode on
 !
 interface GigabitEthernet0/3
  description SW3
  switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
  switchport mode trunk
+ switchport nonegotiate
  media-type rj45
  negotiation auto
- channel-group 1 mode auto
+ channel-group 1 mode on
+!
+interface Vlan1
+ ip address 10.0.0.2 255.255.255.0
+!
+interface Vlan2
+ ip address 10.0.2.2 255.255.255.0
 !
 ip forward-protocol nd
 !
@@ -230,6 +252,7 @@ banner login `
 line con 0
 line aux 0
 line vty 0 4
+ login
 !
 !
 end</entry>
@@ -241,7 +264,7 @@ end</entry>
     <node name="iosvl2-3" type="SIMPLE" subtype="IOSvL2" location="890,171">
         <extensions>
             <entry key="config" type="String">!
-! Last configuration change at 23:19:36 UTC Tue Jan 26 2016
+! Last configuration change at 00:48:47 UTC Wed Jan 27 2016
 !
 version 15.2
 service timestamps debug datetime msec
@@ -288,18 +311,37 @@ vlan internal allocation policy ascending
 !
 !
 !
+interface Port-channel1
+ no switchport
+ no ip address
+!
+interface Port-channel1.1
+ encapsulation dot1Q 1
+ ip address 10.0.0.3 255.255.255.0
+!
+interface Port-channel1.2
+ encapsulation dot1Q 2
+ ip address 10.0.2.3 255.255.255.0
+!
+interface Port-channel1.99
+ encapsulation dot1Q 99 native
+!
 interface GigabitEthernet0/0
  shutdown
  media-type rj45
  negotiation auto
 !
 interface GigabitEthernet0/1
- media-type rj45
+ no switchport
+ no ip address
  negotiation auto
+ channel-group 1 mode on
 !
 interface GigabitEthernet0/2
- media-type rj45
+ no switchport
+ no ip address
  negotiation auto
+ channel-group 1 mode on
 !
 ip forward-protocol nd
 !
@@ -344,6 +386,7 @@ banner login `
 line con 0
 line aux 0
 line vty 0 4
+ login
 !
 !
 end</entry>
