@@ -3,7 +3,7 @@
     <extensions>
         <entry key="management_network" type="String">flat</entry>
     </extensions>
-    <node name="ToDD-Server" type="SIMPLE" subtype="server" location="109,125">
+    <node name="ToDD-Server" type="SIMPLE" subtype="server" location="102,199" vmImage="guest-server-ToDD-Server [90da4980-9bfa-4690-b242-cb3611e187d9]">
         <extensions>
             <entry key="static_ip" type="String">172.23.1.30</entry>
             <entry key="config" type="String">#cloud-config
@@ -64,7 +64,7 @@ write_files:
         </extensions>
         <interface id="0" name="eth1" ipv4="10.0.0.10" netPrefixLenV4="30"/>
     </node>
-    <node name="ToDD-Agent-1" type="SIMPLE" subtype="server" location="326,14" excludeFromLaunch="true">
+    <node name="ToDD-Agent-1" type="SIMPLE" subtype="server" location="334,14" vmImage="guest-server-ToDD-Server [90da4980-9bfa-4690-b242-cb3611e187d9]">
         <extensions>
             <entry key="static_ip" type="String">172.23.1.32</entry>
             <entry key="config" type="String">#cloud-config
@@ -125,7 +125,7 @@ write_files:
         </extensions>
         <interface id="0" name="eth1" ipv4="10.0.0.14" netPrefixLenV4="30"/>
     </node>
-    <node name="iosv-1" type="SIMPLE" subtype="IOSv" location="349,128" excludeFromLaunch="true">
+    <node name="iosv-1" type="SIMPLE" subtype="IOSv" location="357,201">
         <extensions>
             <entry key="static_ip" type="String">172.23.1.31</entry>
             <entry key="Auto-generate config" type="Boolean">false</entry>
@@ -284,7 +284,7 @@ end</entry>
         <interface id="2" name="GigabitEthernet0/3"/>
         <interface id="3" name="GigabitEthernet0/4"/>
     </node>
-    <node name="ToDD-Agent-2" type="SIMPLE" subtype="server" location="532,125" excludeFromLaunch="true">
+    <node name="ToDD-Agent-2" type="SIMPLE" subtype="server" location="582,199" excludeFromLaunch="true">
         <extensions>
             <entry key="static_ip" type="String">172.23.1.33</entry>
             <entry key="config" type="String">#cloud-config
@@ -345,7 +345,7 @@ write_files:
         </extensions>
         <interface id="0" name="eth1"/>
     </node>
-    <node name="ToDD-Agent-3" type="SIMPLE" subtype="server" location="326,242" excludeFromLaunch="true">
+    <node name="ToDD-Agent-3" type="SIMPLE" subtype="server" location="334,397" excludeFromLaunch="true">
         <extensions>
             <entry key="static_ip" type="String">172.23.1.34</entry>
             <entry key="config" type="String">#cloud-config
